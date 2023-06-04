@@ -23,21 +23,23 @@ int dimensionZ = int.Parse(Console.ReadLine());
 
 
 int[,,] array3D = new int[dimensionX, dimensionY, dimensionZ];
-CreateArray(array3D, 10, 99);  // minValue, maxValue
+CreateArray(array3D, 1, 10);  // minValue, maxValue
 PrintArray3D(array3D);
 
-void PrintArray3D(int[,,] array)
+void PrintArray3D(int[,,] array3D)
 {
-    for (int i = 0; i < array.GetLength(0); i++)
+    for (int i = 0; i < array3D.GetLength(0); i++)
     {
-        for (int j = 0; j < array.GetLength(1); j++)
+        for (int j = 0; j < array3D.GetLength(1); j++)
         {
-            for (int k = 0; k < array.GetLength(2); k++)
+            Console.Write($"X({i}) Y({j}) ");
+            for (int k = 0; k < array3D.GetLength(2); k++)
             {
-                Console.Write($"{array[i, j, k]} ({i},{j},{k}) ");
+                Console.Write($"Z({k}){array3D[i, j, k]}; ");
             }
             Console.WriteLine();
         }
+        Console.WriteLine();
     }
 }
 

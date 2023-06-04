@@ -7,17 +7,7 @@
 // 15 18.
 
 Console.Write("Введите количество строк и столбцов в матрице: ");
-int firstRow = int.Parse(Console.ReadLine());
-
-Console.Write("Введите количество строк и столбцов в матрице: ");
-int firstColumn = int.Parse(Console.ReadLine());
-
-Console.Write("Введите количество строк и столбцов в матрице: ");
-int secondRow = int.Parse(Console.ReadLine());
-
-Console.Write("Введите количество строк и столбцов в матрице: ");
-int secondColumn = int.Parse(Console.ReadLine());
-
+int size = int.Parse(Console.ReadLine());
 
 // Console.Write("Введите минимальное число массива: ");
 // int minValue = int.Parse(Console.ReadLine());
@@ -25,8 +15,9 @@ int secondColumn = int.Parse(Console.ReadLine());
 // Console.Write("Введите максимальное число массива: ");
 // int maxValue = int.Parse(Console.ReadLine());
 
-int[,] firstArray = GetArray(firstRow, firstColumn, 0, 10); // minValue, maxValue
-int[,] secondArray = GetArray(secondRow, secondColumn, 0, 10); // minValue, maxValue
+int[,] firstArray = GetArray(size, size, 0, 10); // minValue, maxValue
+int[,] secondArray = GetArray(size, size, 0, 10); // minValue, maxValue
+int[,] resultArray = new int[size, size];
 
 Console.WriteLine("Первая матрица:");
 PrintArray(firstArray);
@@ -36,15 +27,11 @@ Console.WriteLine("Вторая матрица:");
 PrintArray(secondArray);
 Console.WriteLine();
 
-if (firstRow == secondColumn)
-{
-    Console.WriteLine("Результат произведения двух матриц:");
-    PrintArray(MultiplyMatrix(firstArray, secondArray));
-    Console.WriteLine();
-}
-else Console.WriteLine("Операция умножения двух матриц выполнима только в том случае, если число столбцов в первом сомножителе равно числу строк во втором.");
+MultiplyMatrix(firstArray, secondArray, resultArray);
 
-
+Console.WriteLine("Результат произведения двух матриц:");
+PrintArray(resultArray);
+Console.WriteLine();
 
 void PrintArray(int[,] inArray)
 {
@@ -69,18 +56,18 @@ int[,] GetArray(int m, int n, int minValue, int maxValue)
     }
     return result;
 }
-int [,] MultiplyMatrix(int[,] arrayA, int[,] arrayB)
+void MultiplyMatrix(int[,] firstArray, int[,] secondArray, int[,] resultArray)
+{
+    for (int i = 0; i < resultArray.GetLength(0); i++)
     {
-      int[,] resultMatrix = new int[arrayA.GetLength(0), arrayB.GetLength(1)];
-      for (int i = 0; i < arrayA.GetLength(0); i++)
-      {
-        for (int j = 0; j < arrayB.GetLength(1); j++)
+        for (int j = 0; j < resultArray.GetLength(1); j++)
         {
-          for (int k = 0; k < arrayA.GetLength(1); k++)
-          {
-            resultMatrix[i, j] += arrayA[i, k] * arrayB[k, j];
-          }
+            int sum = 0;
+            for (int k = 0; k < resultArray.GetLength(1); k++)
+            {
+                sum += firstArray[i, k] * secondArray[k, j];
+            }
+            resultArray[i, j] = sum;
         }
-      }
-      return resultMatrix;
     }
+}
